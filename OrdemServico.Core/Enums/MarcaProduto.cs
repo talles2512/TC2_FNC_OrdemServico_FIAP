@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OrdemServico.Core.Enums
 {
-    public enum TipoMarca
+    public enum MarcaProduto
     {
         Sega,
         Nintendo,

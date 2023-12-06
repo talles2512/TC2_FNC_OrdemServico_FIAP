@@ -12,7 +12,19 @@ namespace OrdemServico.Infra.Configurations
 
             builder.HasKey(x => x.Id);
             builder.Property(x => x.NomeCliente).HasMaxLength(255).IsRequired();
-            builder.Property(x => x.NomeCliente).HasMaxLength(255);
+            builder.Property(x => x.Endereco).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.NumeroTelefone).HasMaxLength(13).IsRequired();
+            builder.Property(x => x.Email).HasMaxLength(255).IsRequired();
+            builder.Property(x => x.TipoProduto).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.MarcaProduto).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.ModeloEquipamento).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.NumeroSerie).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.TipoProblema).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.DescricaoProblema).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.ExpiracaoGarantia);
+            builder.Property(x => x.DataCriacao).IsRequired();
+            builder.Property(x => x.PrazoConclusao).IsRequired();
+            builder.Property(x => x.StatusOrdem).HasMaxLength(20).IsRequired();
         }
     }
 }
