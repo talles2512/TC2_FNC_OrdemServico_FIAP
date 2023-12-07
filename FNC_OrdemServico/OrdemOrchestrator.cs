@@ -17,10 +17,17 @@ namespace FNC_OrdemServico
         {
             var ordem = context.GetInput<Ordem>();
 
-            var tempoExpiracaoGarantia = await context.CallActivityAsync<dynamic>("VerificaTipoProdutoFunction", ordem);
-            var estaNaGarantia = await context.CallActivityAsync<dynamic>("VerificaGarantiaProdutoFunction", (tempoExpiracaoGarantia, ordem));
-            var retorno = await context.CallActivityAsync<dynamic>("VerificaDefeitoProdutoFunction", (estaNaGarantia, ordem));
-            var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemGarantiaFunction", (retorno, ordem));
+            var retornoVerificaoTipoProduto = await context.CallActivityAsync<dynamic>("VerificaTipoProdutoFunction", ordem);
+
+            if (retornoVerificaoTipoProduto.Sucesso)
+            {
+                var estaNaGarantia = await context.CallActivityAsync<bool>("VerificaGarantiaProdutoFunction", (retornoVerificaoTipoProduto.TempoGarantia, ordem));
+                var retorno = await context.CallActivityAsync<dynamic>("VerificaDefeitoProdutoFunction", (estaNaGarantia, ordem));
+            }
+
+
+            var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemGarantiaFunction", ordem);
+
             return confirmacao;
         }
     }

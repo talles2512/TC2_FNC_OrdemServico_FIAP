@@ -8,11 +8,11 @@ namespace OrdemServico.Core.Domain
 {
     public static class Defeito
     {
-        public static List<string> Defeitos { get; set; }
+        public static List<string> Defeitos { get; }
 
         static Defeito()
         {
-            Defeitos = new List<string>()
+            Defeitos = new()
             {
                 "Superaquecimento",
                 "Problemas de Conexão e Portas",

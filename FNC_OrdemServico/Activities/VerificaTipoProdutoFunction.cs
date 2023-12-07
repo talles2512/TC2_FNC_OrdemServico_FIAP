@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using OrdemServico.Core.Domain;
 using OrdemServico.Core.Enums;
 using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace FNC_OrdemServico.Activities
@@ -17,103 +19,132 @@ namespace FNC_OrdemServico.Activities
         {
             log.LogInformation("C# HTTP trigger function processed a request => VerificaTipoProdutoFunction");
 
-            var (codigoMarca, mensagemErroMarca) = VerificaMarcaProduto(ordem.MarcaProduto);
-            if (codigoMarca == 0)
-            {
-                return new { Sucesso = false, Mensagem = mensagemErroMarca, TempoGarantia = 0 };
-            }
+            var resultado = CalcularTempoGarantia(ordem);
 
-            var (codigoProduto, mensagemErroProduto) = VerificaTipoProduto(ordem.TipoProduto);
-            if (codigoProduto == 0)
-            {
-                return new { Sucesso = false, Mensagem = mensagemErroProduto, TempoGarantia = 0 };
-            }
-
-            //Modelos de produtos aqui
-            //Verificacao aqui
-
-            var tempoGarantia = CalculaTempoGarantia(codigoMarca, codigoProduto, "");
-
-            return new { Sucesso = true, Mensagem = string.Empty, TempoGarantia = tempoGarantia };
+            return await Task.FromResult(resultado);
         }
 
-        private static Tuple<int, string> VerificaMarcaProduto(string marca)
+        private static dynamic CalcularTempoGarantia(Ordem ordem)
         {
-            if (Enum.TryParse(typeof(MarcaProduto), marca, out object result))
+            var sucesso = false;
+            var tempoGarantiaMeses = 0;
+            var mensagem = string.Empty;
+
+            if (Enum.TryParse(typeof(MarcaProduto), ordem.MarcaProduto, out object resultadoMarca))
             {
-                MarcaProduto marcaProduto = (MarcaProduto)result;
-                int codigo = 0;
-                if (marcaProduto is MarcaProduto.Sega)
+                MarcaProduto marcaProduto = (MarcaProduto)resultadoMarca;
+
+                switch (marcaProduto)
                 {
-                    codigo = 1;
-                }
-                else if (marcaProduto is MarcaProduto.Playstation)
-                {
-                    codigo = 2;
-                }
-                else if (marcaProduto is MarcaProduto.Nintendo)
-                {
-                    codigo = 3;
-                }
-                else if (marcaProduto is MarcaProduto.Xbox)
-                {
-                    codigo = 4;
+                    case MarcaProduto.Sega:
+                    case MarcaProduto.Playstation:
+                    case MarcaProduto.Nintendo:
+                    case MarcaProduto.Xbox:
+                        tempoGarantiaMeses += 3;
+                        break;
                 }
 
-                return Tuple.Create(codigo, string.Empty);
+                if (Enum.TryParse(typeof(TipoProduto), ordem.TipoProduto, out object result))
+                {
+                    TipoProduto tipoProduto = (TipoProduto)result;
+
+                    switch (tipoProduto)
+                    {
+                        case TipoProduto.Acessorio:
+                            tempoGarantiaMeses += 9;
+                            break;
+                        case TipoProduto.Componente:
+                            tempoGarantiaMeses += 0;
+                            break;
+                        case TipoProduto.Console:
+                            tempoGarantiaMeses += 3;
+                            break;
+                        case TipoProduto.Controle:
+                            tempoGarantiaMeses += 0;
+                            break;
+                    }
+
+                    sucesso = VerificaCoberturaModelo(marcaProduto, tipoProduto, ordem.ModeloEquipamento);
+
+                    if (!sucesso)
+                    {
+                        tempoGarantiaMeses = 0;
+                        mensagem = "Modelo de Produto fora da cobertura de serviço";
+                    }
+                }
+                else
+                {
+                    tempoGarantiaMeses = 0;
+                    mensagem = "Produto fora da cobertura de serviço";
+                }
             }
             else
-            {
-                return Tuple.Create(0, "Marca fora da cobertura de serviço");
-            }
+                mensagem = "Marca fora da cobertura de serviço";
+
+            return new {
+                Sucesso = sucesso,
+                Mensagem = mensagem,
+                TempoGarantia = tempoGarantiaMeses
+            };
         }
 
-        private static Tuple<int, string> VerificaTipoProduto(string produto)
+
+        private static bool VerificaCoberturaModelo(MarcaProduto marcaProduto, TipoProduto tipoProduto, string modelo)
         {
-            if (Enum.TryParse(typeof(TipoProduto), produto, out object result))
+            var cobertura = false;
+
+            switch (marcaProduto)
             {
-                TipoProduto tipoProduto = (TipoProduto)result;
-                int codigo = 0;
-                if (tipoProduto is TipoProduto.Acessorio)
-                {
-                    codigo = 1;
-                }
-                else if (tipoProduto is TipoProduto.Componente)
-                {
-                    codigo = 2;
-                }
-                else if (tipoProduto is TipoProduto.Console)
-                {
-                    codigo = 3;
-                }
-                else if (tipoProduto is TipoProduto.Controle)
-                {
-                    codigo = 4;
-                }
+                case MarcaProduto.Sega:
 
-                return Tuple.Create(codigo, string.Empty);
+                    if(tipoProduto is  TipoProduto.Acessorio)
+                        cobertura = ModelosSega.ModelosAcessorio.Any(x => x.Contains(modelo));
+                    else if(tipoProduto is TipoProduto.Componente)
+                        cobertura = ModelosSega.ModelosComponente.Any(x => x.Contains(modelo));
+                    else if(tipoProduto is TipoProduto.Console)
+                        cobertura = ModelosSega.ModelosConsole.Any(x => x.Contains(modelo));
+                    else
+                        cobertura = ModelosSega.ModelosControle.Any(x => x.Contains(modelo));
+                    break;
+
+                case MarcaProduto.Playstation:
+
+                    if (tipoProduto is TipoProduto.Acessorio)
+                        cobertura = ModelosPlaystation.ModelosAcessorio.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Componente)
+                        cobertura = ModelosPlaystation.ModelosComponente.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Console)
+                        cobertura = ModelosPlaystation.ModelosConsole.Any(x => x.Contains(modelo));
+                    else
+                        cobertura = ModelosPlaystation.ModelosControle.Any(x => x.Contains(modelo));
+                    break;
+
+                case MarcaProduto.Nintendo:
+
+                    if (tipoProduto is TipoProduto.Acessorio)
+                        cobertura = ModelosNintendo.ModelosAcessorio.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Componente)
+                        cobertura = ModelosNintendo.ModelosComponente.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Console)
+                        cobertura = ModelosNintendo.ModelosConsole.Any(x => x.Contains(modelo));
+                    else
+                        cobertura = ModelosNintendo.ModelosControle.Any(x => x.Contains(modelo));
+                    break;
+
+                case MarcaProduto.Xbox:
+
+                    if (tipoProduto is TipoProduto.Acessorio)
+                        cobertura = ModelosXbox.ModelosAcessorio.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Componente)
+                        cobertura = ModelosXbox.ModelosComponente.Any(x => x.Contains(modelo));
+                    else if (tipoProduto is TipoProduto.Console)
+                        cobertura = ModelosXbox.ModelosConsole.Any(x => x.Contains(modelo));
+                    else
+                        cobertura = ModelosXbox.ModelosControle.Any(x => x.Contains(modelo));
+                    break;
             }
-            else
-            {
-                return Tuple.Create(0, "Produto fora da cobertura de serviço");
-            }
-        }
 
-        private static int CalculaTempoGarantia(int codigoMarca, int codigoProduto, string modelo)
-        {
-            int qtdeMeses = 0;
-
-            if (codigoMarca == 1) { qtdeMeses += 3; }
-            else if (codigoMarca == 2) { qtdeMeses += 3; }
-            else if (codigoMarca == 3) { qtdeMeses += 3; }
-            else if (codigoMarca == 4) { qtdeMeses += 3; }
-
-            if (codigoProduto == 1) { qtdeMeses += 9; }
-            else if (codigoProduto == 2) { qtdeMeses += 0; }
-            else if (codigoProduto == 3) { qtdeMeses += 3; }
-            else if (codigoProduto == 4) { qtdeMeses += 0; }
-
-            return qtdeMeses;
+            return cobertura;
         }
     }
 }
