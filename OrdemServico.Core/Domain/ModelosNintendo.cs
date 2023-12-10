@@ -24,9 +24,9 @@ namespace OrdemServico.Core.Domain
                 "Gameboy Advanced",
                 " DS",
                 "GameCube",
-                "Wii",
-                " 3DS",
-                "Switch"
+                "Nintendo Wii",
+                "Nintendo 3DS",
+                "Nintendo Switch"
             };
 
             ModelosAcessorio = new()

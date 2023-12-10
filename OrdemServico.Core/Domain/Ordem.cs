@@ -11,11 +11,12 @@
         public string MarcaProduto { get; set; }
         public string ModeloEquipamento { get; set; }
         public string NumeroSerie { get; set; }
-        public string TipoProblema { get; set; }
+        public string TipoDefeito { get; set; }
         public string DescricaoProblema { get; set; }
-        public DateTime ExpiracaoGarantia { get; set; }
+        public DateTime DataAquisicao { get; set; }
         public DateTime DataCriacao { get; set; }
-        public int PrazoConclusao { get; set; }
+        public bool EstaNaGarantia { get; set; }
+        public int PrazoConclusaoDiasUteis { get; set; }
         public string StatusOrdem { get; set; }
     }
 }

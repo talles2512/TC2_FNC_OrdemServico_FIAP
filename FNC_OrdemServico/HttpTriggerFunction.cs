@@ -80,9 +80,9 @@ namespace FNC_OrdemServico
             {
                 mensagensErros.Add("Por favor preencha o nº de série corretamente.");
             }
-            else if (string.IsNullOrEmpty(ordem.TipoProblema) || ordem.TipoProblema.Length < 5)
+            else if (string.IsNullOrEmpty(ordem.TipoDefeito) || ordem.TipoDefeito.Length < 5)
             {
-                mensagensErros.Add("Por favor preencha o tipo do problema corretamente.");
+                mensagensErros.Add("Por favor preencha o tipo do defeito corretamente.");
             }
             else if (string.IsNullOrEmpty(ordem.DescricaoProblema) || ordem.DescricaoProblema.Length < 5)
             {

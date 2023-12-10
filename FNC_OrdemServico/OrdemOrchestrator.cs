@@ -5,7 +5,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OrdemServico.Core.Domain;
+using OrdemServico.Core.Objects;
 
 namespace FNC_OrdemServico
 {
@@ -17,16 +19,18 @@ namespace FNC_OrdemServico
         {
             var ordem = context.GetInput<Ordem>();
 
-            var retornoVerificaoTipoProduto = await context.CallActivityAsync<dynamic>("VerificaTipoProdutoFunction", ordem);
+            var retornoVerificacaoTipoProduto = await context.CallActivityAsync<ResultadoOperacao<int>>("VerificaTipoProdutoFunction", ordem);
 
-            if (retornoVerificaoTipoProduto.Sucesso)
+            if (retornoVerificacaoTipoProduto.Sucesso)
             {
-                var estaNaGarantia = await context.CallActivityAsync<bool>("VerificaGarantiaProdutoFunction", (retornoVerificaoTipoProduto.TempoGarantia, ordem));
-                var retorno = await context.CallActivityAsync<dynamic>("VerificaDefeitoProdutoFunction", (estaNaGarantia, ordem));
+                var estaNaGarantia = await context.CallActivityAsync<bool>("VerificaGarantiaProdutoFunction", (retornoVerificacaoTipoProduto.Retorno, ordem));
+                var retornoPrazoManutencao = await context.CallActivityAsync<ResultadoOperacao<int>>("GeraPrazoManutencaoFunction", ordem);
+
+                var sucesso = retornoPrazoManutencao.Sucesso;
             }
 
 
-            var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemGarantiaFunction", ordem);
+            var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemManutencao", ordem);
 
             return confirmacao;
         }

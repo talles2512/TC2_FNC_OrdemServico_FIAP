@@ -3,6 +3,7 @@ using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Extensions.Logging;
 using OrdemServico.Core.Domain;
 using OrdemServico.Core.Enums;
+using OrdemServico.Core.Objects;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,7 +14,7 @@ namespace FNC_OrdemServico.Activities
     public static class VerificaTipoProdutoFunction
     {
         [FunctionName("VerificaTipoProdutoFunction")]
-        public static async Task<dynamic> Run(
+        public static async Task<ResultadoOperacao<int>> Run(
             [ActivityTrigger] Ordem ordem,
             ILogger log)
         {
@@ -24,7 +25,7 @@ namespace FNC_OrdemServico.Activities
             return await Task.FromResult(resultado);
         }
 
-        private static dynamic CalcularTempoGarantia(Ordem ordem)
+        private static ResultadoOperacao<int> CalcularTempoGarantia(Ordem ordem)
         {
             var sucesso = false;
             var tempoGarantiaMeses = 0;
@@ -81,10 +82,10 @@ namespace FNC_OrdemServico.Activities
             else
                 mensagem = "Marca fora da cobertura de serviço";
 
-            return new {
+            return new(){
                 Sucesso = sucesso,
                 Mensagem = mensagem,
-                TempoGarantia = tempoGarantiaMeses
+                Retorno = tempoGarantiaMeses
             };
         }
 

@@ -19,11 +19,12 @@ namespace OrdemServico.Infra.Configurations
             builder.Property(x => x.MarcaProduto).HasMaxLength(50).IsRequired();
             builder.Property(x => x.ModeloEquipamento).HasMaxLength(100).IsRequired();
             builder.Property(x => x.NumeroSerie).HasMaxLength(100).IsRequired();
-            builder.Property(x => x.TipoProblema).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.TipoDefeito).HasMaxLength(50).IsRequired();
             builder.Property(x => x.DescricaoProblema).HasMaxLength(100).IsRequired();
-            builder.Property(x => x.ExpiracaoGarantia);
+            builder.Property(x => x.DataAquisicao);
             builder.Property(x => x.DataCriacao).IsRequired();
-            builder.Property(x => x.PrazoConclusao).IsRequired();
+            builder.Property(x => x.EstaNaGarantia).IsRequired();
+            builder.Property(x => x.PrazoConclusaoDiasUteis).IsRequired();
             builder.Property(x => x.StatusOrdem).HasMaxLength(20).IsRequired();
         }
     }
