@@ -16,6 +16,8 @@ namespace FNC_OrdemServico.Activities
         {
             var (tempoGarantiaMeses, ordem) = input;
 
+            log.LogInformation($"VerificaGarantiaProdutoFunction - {ordem.Id} => Verificar se está na garantia. Data da aquisição '{ordem.DataAquisicao}'");
+
             var estaNaGarantia = false;
 
             if(!(ordem.DataAquisicao == DateTime.MinValue))
@@ -24,6 +26,8 @@ namespace FNC_OrdemServico.Activities
 
                 estaNaGarantia = dataExpiracaoGarantia > DateTime.Now;
             }
+
+            log.LogInformation($"VerificaGarantiaProdutoFunction - {ordem.Id} => Garantia '{estaNaGarantia}'");
 
             return await Task.FromResult(estaNaGarantia);
         }

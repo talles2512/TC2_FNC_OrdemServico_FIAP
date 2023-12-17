@@ -1,4 +1,6 @@
-﻿namespace OrdemServico.Core.Domain
+﻿using OrdemServico.Core.Enums;
+
+namespace OrdemServico.Core.Domain
 {
     public class Ordem
     {
@@ -15,8 +17,6 @@
         public string DescricaoProblema { get; set; }
         public DateTime DataAquisicao { get; set; }
         public DateTime DataCriacao { get; set; }
-        public bool EstaNaGarantia { get; set; }
-        public int PrazoConclusaoDiasUteis { get; set; }
-        public string StatusOrdem { get; set; }
+        public ProcessamentoOrdem ProcessamentoOrdem { get; set; }
     }
 }

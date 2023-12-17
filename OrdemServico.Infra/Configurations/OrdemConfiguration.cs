@@ -9,7 +9,6 @@ namespace OrdemServico.Infra.Configurations
         public void Configure(EntityTypeBuilder<Ordem> builder)
         {
             builder.ToTable("Ordem");
-
             builder.HasKey(x => x.Id);
             builder.Property(x => x.NomeCliente).HasMaxLength(255).IsRequired();
             builder.Property(x => x.Endereco).HasMaxLength(255).IsRequired();
@@ -23,9 +22,7 @@ namespace OrdemServico.Infra.Configurations
             builder.Property(x => x.DescricaoProblema).HasMaxLength(100).IsRequired();
             builder.Property(x => x.DataAquisicao);
             builder.Property(x => x.DataCriacao).IsRequired();
-            builder.Property(x => x.EstaNaGarantia).IsRequired();
-            builder.Property(x => x.PrazoConclusaoDiasUteis).IsRequired();
-            builder.Property(x => x.StatusOrdem).HasMaxLength(20).IsRequired();
+            builder.HasOne(x => x.ProcessamentoOrdem);
         }
     }
 }

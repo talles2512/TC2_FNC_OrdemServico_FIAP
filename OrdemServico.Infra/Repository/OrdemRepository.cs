@@ -14,15 +14,19 @@ namespace OrdemServico.Infra.Repository
             _dbSet = _dbContext.Set<Ordem>();
         }
 
-        public async Task<Ordem> ObterOrdem(string nserie)
+        public async Task<Ordem> ObterOrdemProcessamentoOrdem(string nserie)
         {
-            return await _dbSet.FirstOrDefaultAsync(o => o.NumeroSerie == nserie);
+            var ordem = await _dbSet
+                .Include(x => x.ProcessamentoOrdem)
+                .FirstOrDefaultAsync(o => o.NumeroSerie == nserie && o.ProcessamentoOrdem.Ativo);
+
+            return ordem;
         }
 
         public async Task InserirOrdem(Ordem ordem)
         {
             await _dbSet.AddAsync(ordem);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

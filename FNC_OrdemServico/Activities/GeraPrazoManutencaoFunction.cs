@@ -16,7 +16,12 @@ namespace FNC_OrdemServico.Activities
             [ActivityTrigger] Ordem ordem,
             ILogger log)
         {
+
+            log.LogInformation($"GeraPrazoManutencaoFunction - {ordem.Id} => Calcular prazo da manutencao");
+
             var resultado = CalculaPrazoManutencao(ordem);
+
+            log.LogInformation($"GeraPrazoManutencaoFunction - {ordem.Id} => Resultado '{resultado.Sucesso}' Prazo da manutenção '{resultado.Retorno}' dias");
 
             return await Task.FromResult(resultado);
         }

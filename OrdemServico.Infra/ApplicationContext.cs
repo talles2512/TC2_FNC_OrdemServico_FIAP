@@ -11,18 +11,18 @@ namespace OrdemServico.Infra
 {
     public class ApplicationContext: DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> options)
+        public ApplicationContext(DbContextOptions options)
             : base(options)
         {
             
         }
-
         public DbSet<Ordem> Ordens { get; set; }
-
+        public DbSet<ProcessamentoOrdem> ProcessamentoOrdens { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new OrdemConfiguration());
             base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new OrdemConfiguration());
+            modelBuilder.ApplyConfiguration(new ProcessamentoOrdemConfiguration());
         }
     }
 }

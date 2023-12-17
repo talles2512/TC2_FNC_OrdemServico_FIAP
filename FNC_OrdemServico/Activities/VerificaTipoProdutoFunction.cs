@@ -18,9 +18,11 @@ namespace FNC_OrdemServico.Activities
             [ActivityTrigger] Ordem ordem,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request => VerificaTipoProdutoFunction");
+            log.LogInformation($"VerificaTipoProdutoFunction - {ordem.Id} => Calcular tempo Garantia para '{ordem.TipoProduto}' do tipo '{ordem.ModeloEquipamento}' da marca '{ordem.MarcaProduto}'");
 
             var resultado = CalcularTempoGarantia(ordem);
+
+            log.LogInformation($"VerificaTipoProdutoFunction - {ordem.Id} => Resultado '{resultado.Sucesso}' Meses de garanta '{resultado.Retorno}'");
 
             return await Task.FromResult(resultado);
         }
