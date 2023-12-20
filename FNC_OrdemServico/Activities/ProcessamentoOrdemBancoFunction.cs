@@ -43,26 +43,6 @@ namespace FNC_OrdemServico.Activities
             }
         }
 
-        //public async Task<ResultadoOperacao<ProcessamentoOrdem>> ObterProcessamentoOrdem(string numeroSerie)
-        //{
-        //    var sucesso = false;
-        //    var mensagem = string.Empty;
-        //    var processamentoOrdemDb = await _repository.ObterProcessamentoOrdem(numeroSerie);
-
-        //    if(processamentoOrdemDb is null)
-        //    {
-        //        sucesso = false;
-        //        mensagem = "ProcessamentoOrdem não encontrado";
-        //    }
-
-        //    return new()
-        //    {
-        //        Sucesso = sucesso,
-        //        Mensagem = mensagem,
-        //        Retorno = processamentoOrdemDb
-        //    };
-        //}
-
         public async Task<ResultadoOperacao<ProcessamentoOrdem>> InserirProcessamentoOrdem(ProcessamentoOrdem processamentoOrdem)
         {
             var sucesso = true;
@@ -102,6 +82,10 @@ namespace FNC_OrdemServico.Activities
                 processamentoOrdemDb.StatusOrdem = processamentoOrdem.StatusOrdem;
                 processamentoOrdemDb.DataAtualizacao = processamentoOrdem.DataAtualizacao;
                 processamentoOrdemDb.Ativo = processamentoOrdem.Ativo;
+                processamentoOrdemDb.PrazoConclusaoDiasUteis = processamentoOrdem.PrazoConclusaoDiasUteis;
+                processamentoOrdemDb.MotivoRecusa = processamentoOrdem.MotivoRecusa;
+                processamentoOrdemDb.EstaNaGarantia = processamentoOrdem.EstaNaGarantia;
+
                 await _repository.AlterarProcessamentoOrdem(processamentoOrdemDb);
             }
 

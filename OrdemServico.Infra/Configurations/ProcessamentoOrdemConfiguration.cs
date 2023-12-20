@@ -23,7 +23,7 @@ namespace OrdemServico.Infra.Configurations
             builder.Property(x => x.DataCriacao).IsRequired();
             builder.Property(x => x.DataAtualizacao).IsRequired();
             builder.Property(x => x.Ativo).IsRequired();
-            builder.Property(x => x.MotivoRecusa).HasMaxLength(100);
+            builder.Property(x => x.MotivoRecusa).HasMaxLength(100).IsRequired(false);
         }
     }
 }

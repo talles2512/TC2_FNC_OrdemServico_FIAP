@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrdemServico.Core.Domain;
@@ -16,7 +17,7 @@ namespace FNC_OrdemServico
     public static class OrdemOrquestrator
     {
         [FunctionName("OrdemOrquestrator")]
-        public static async Task<string> RunOrchestrator(
+        public static async Task<dynamic> RunOrchestrator(
             [OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             try
@@ -29,14 +30,25 @@ namespace FNC_OrdemServico
                 {
                     var processamentoOrdem = await ProcessarOrdem(context, ordem);
 
-                    return string.Empty;
+                    return new
+                    {
+                        NomeCliente = ordem.NomeCliente,
+                        Endereco = ordem.Endereco,
+                        NumeroTelefone = ordem.NumeroTelefone,
+                        Email = ordem.Email,
+                        TipoProduto = ordem.TipoProduto,
+                        MarcaProduto = ordem.MarcaProduto,
+                        ModeloEquipamento = ordem.ModeloEquipamento,
+                        NumeroSerie = ordem.NumeroSerie,
+                        StatusOrdem = processamentoOrdem.StatusOrdem.ToString(),
+                        MotivoRecusa = processamentoOrdem.MotivoRecusa,
+                        PrazoConclusaoDiasUteis = processamentoOrdem.PrazoConclusaoDiasUteis,
+                        Garantia = processamentoOrdem.EstaNaGarantia ? "Sim" : "Não"
+                    };
                 }
                 else
                 {
-                    //Em caso de falha no insert da Ordem
-                    //var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemManutencao", ordem);
-
-                    return string.Empty;
+                    return retornoInserirOrdem;
                 }
             }
             catch (Exception ex)
@@ -47,7 +59,7 @@ namespace FNC_OrdemServico
 
         private static async Task<ProcessamentoOrdem> ProcessarOrdem(IDurableOrchestrationContext context, Ordem ordem)
         {
-            var processamentoOrdem = NovoProcessamentoOrdem(ordem);
+            var processamentoOrdem = NovoProcessamentoOrdem(context, ordem);
 
             var retornoObterProcessamentoOrdem = await context.CallActivityAsync<ResultadoOperacao<Ordem>>("OrdemBancoFunction", (OperacaoBanco.Obter, ordem));
 
@@ -79,6 +91,7 @@ namespace FNC_OrdemServico
                     if (resultadoOperacao.Sucesso)
                     {
                         processamentoOrdem.StatusOrdem = StatusOrdem.APROVADA;
+                        processamentoOrdem.PrazoConclusaoDiasUteis = resultadoOperacao.Retorno;
                         processamentoOrdem.EstaNaGarantia = await context.CallActivityAsync<bool>("VerificaGarantiaProdutoFunction", (resultadoOperacao.Retorno, ordem));
                     }
                     else
@@ -98,21 +111,14 @@ namespace FNC_OrdemServico
 
             var retornoAlterarProcessamentoOrdem = await context.CallActivityAsync<ResultadoOperacao<ProcessamentoOrdem>>("ProcessamentoOrdemBancoFunction", (OperacaoBanco.Alterar, processamentoOrdem));
 
-            if (retornoAlterarProcessamentoOrdem.Sucesso)
-            {
-                //var confirmacao = await context.CallActivityAsync<dynamic>("EmitirOrdemManutencao", ordem);
-
-                //return confirmacao;
-            }
-
-            return processamentoOrdem;
+            return retornoAlterarProcessamentoOrdem.Retorno;
         }
 
-        private static ProcessamentoOrdem NovoProcessamentoOrdem(Ordem ordem)
+        private static ProcessamentoOrdem NovoProcessamentoOrdem(IDurableOrchestrationContext context, Ordem ordem)
         {
             return new()
             {
-                Id = Guid.NewGuid(),
+                Id = context.NewGuid(),
                 OrdemId = ordem.Id,
                 StatusOrdem = StatusOrdem.ANALISE,
                 DataCriacao = DateTime.Now,
