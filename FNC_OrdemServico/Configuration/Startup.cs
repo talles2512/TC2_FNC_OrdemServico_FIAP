@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using OrdemServico.Infra;
 using OrdemServico.Infra.Repository;
+using System;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -15,9 +16,12 @@ namespace FNC_OrdemServico.Configuration
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var configuration = builder.GetContext().Configuration;
-            var connectionString = configuration.GetConnectionString("ApplicationConnectionString");
-            builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString));
+            var connectionString = Environment.GetEnvironmentVariable("OrdemServicoDbSecret");
+
+            builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionString, options =>
+            {
+                options.EnableRetryOnFailure();
+            }));
             builder.Services.AddScoped<OrdemRepository>();
             builder.Services.AddScoped<ProcessamentoOrdemRepository>();
         }
