@@ -30,21 +30,22 @@ namespace FNC_OrdemServico
                 {
                     var processamentoOrdem = await ProcessarOrdem(context, ordem);
 
-                    return new
-                    {
-                        NomeCliente = ordem.NomeCliente,
-                        Endereco = ordem.Endereco,
-                        NumeroTelefone = ordem.NumeroTelefone,
-                        Email = ordem.Email,
-                        TipoProduto = ordem.TipoProduto,
-                        MarcaProduto = ordem.MarcaProduto,
-                        ModeloEquipamento = ordem.ModeloEquipamento,
-                        NumeroSerie = ordem.NumeroSerie,
-                        StatusOrdem = processamentoOrdem.StatusOrdem.ToString(),
-                        MotivoRecusa = processamentoOrdem.MotivoRecusa,
-                        PrazoConclusaoDiasUteis = processamentoOrdem.PrazoConclusaoDiasUteis,
-                        Garantia = processamentoOrdem.EstaNaGarantia ? "Sim" : "Não"
-                    };
+                    return new EmissaoOrdem
+                    (
+                        ordem.Id,
+                        ordem.NomeCliente,
+                        ordem.Endereco,
+                        ordem.NumeroTelefone,
+                        ordem.Email,
+                        ordem.TipoProduto,
+                        ordem.MarcaProduto,
+                        ordem.ModeloEquipamento,
+                        ordem.NumeroSerie,
+                        processamentoOrdem.StatusOrdem,
+                        processamentoOrdem.MotivoRecusa,
+                        processamentoOrdem.PrazoConclusaoDiasUteis,
+                        processamentoOrdem.EstaNaGarantia
+                    );
                 }
                 else
                 {
