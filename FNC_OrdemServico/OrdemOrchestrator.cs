@@ -23,7 +23,7 @@ namespace FNC_OrdemServico
             try
             {
                 var ordem = context.GetInput<Ordem>();
-
+                ordem.DataCriacao = DateTime.Now;
                 var retornoInserirOrdem = await context.CallActivityAsync<ResultadoOperacao<Ordem>>("OrdemBancoFunction", (OperacaoBanco.Inserir, ordem));
 
                 if (retornoInserirOrdem.Sucesso)
@@ -61,7 +61,7 @@ namespace FNC_OrdemServico
         private static async Task<ProcessamentoOrdem> ProcessarOrdem(IDurableOrchestrationContext context, Ordem ordem)
         {
             var processamentoOrdem = NovoProcessamentoOrdem(context, ordem);
-
+            
             var retornoObterProcessamentoOrdem = await context.CallActivityAsync<ResultadoOperacao<Ordem>>("OrdemBancoFunction", (OperacaoBanco.Obter, ordem));
 
             if (retornoObterProcessamentoOrdem.Sucesso)
