@@ -23,7 +23,6 @@ namespace FNC_OrdemServico
             try
             {
                 var ordem = context.GetInput<Ordem>();
-                ordem.DataCriacao = DateTime.Now;
                 var retornoInserirOrdem = await context.CallActivityAsync<ResultadoOperacao<Ordem>>("OrdemBancoFunction", (OperacaoBanco.Inserir, ordem));
 
                 if (retornoInserirOrdem.Sucesso)

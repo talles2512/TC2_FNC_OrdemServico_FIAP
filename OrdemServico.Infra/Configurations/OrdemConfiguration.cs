@@ -21,7 +21,7 @@ namespace OrdemServico.Infra.Configurations
             builder.Property(x => x.TipoDefeito).HasMaxLength(50).IsRequired();
             builder.Property(x => x.DescricaoProblema).HasMaxLength(100).IsRequired();
             builder.Property(x => x.DataAquisicao);
-            builder.Property(x => x.DataCriacao).IsRequired();
+            builder.Property(x => x.DataCriacao).HasDefaultValue(DateTime.Now);
             builder.HasOne(x => x.ProcessamentoOrdem);
         }
     }
