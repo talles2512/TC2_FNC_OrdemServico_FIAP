@@ -1,0 +1,13 @@
+{
+    "NomeCliente": "Hebert",
+    "Endereco": "Av 1234",
+    "NumeroTelefone": "11900000000",
+    "Email": "email@emai.com",
+    "TipoProduto": "Controle",
+    "MarcaProduto": "Nintendo",
+    "ModeloEquipamento": "Controller Pro",
+    "NumeroSerie": "XXXXXXXXXX",
+    "TipoDefeito": "Desgaste",
+    "DescricaoProblema": "Controle apresenta movimentação do analógico mesmo quando está em repouso",
+    "DataAquisicao": "2024-04-04"
+}
