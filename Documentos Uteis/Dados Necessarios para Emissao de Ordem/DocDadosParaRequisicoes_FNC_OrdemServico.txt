@@ -1,0 +1,154 @@
+Tipos de Defeitos aceitos na FNC_OrdemServico.: 
+"Superaquecimento",
+"Problemas de Conexão e Portas",
+"Problemas de Leitura de Mídia",
+"Atualizações de Software Problemáticas",
+"Problemas Conectividade de Rede",
+"Problemas de Energia",
+"Falhas de Hardware Gerais",
+"Desgaste de Controles",
+"Problemas de Armazenamento",
+"Problemas de Áudio e Vídeo",
+"Problemas de Compatibilidade",
+"Falhas de Sistema e Erros de Software"
+
+Tipos de Produtos aceitos na FNC_OrdemServico.: Console,  Acessorio, Controle e Componente.
+Marcas de produtos aceitos na FNC_OrdemServico.: Sega, Nintendo, Playstation e Xbox.
+
+Sega
+
+Modelos de Consoles Sega.: 
+"SG-1000",
+"Master System",
+"Mega Drive",
+"Sega CD",
+"Sega Game Gear",
+"Sega Saturn",
+"Sega 32x",
+"Nomad",
+"DreamCast",
+"MegaDrive Mini"
+
+Modelos de Acessórios Sega.:
+"Sega Light Phaser",
+"Sega 3D Glasses",
+"Sega Power Base Converter",
+"Sega Team Player",
+"Sega Netlink",
+"Sega DreamCast VMU"
+
+Modelos de Controles Sega.:
+"Mega Drive Controller",
+"DreamCast Controller",
+"Sega 6-button Controller",
+"Sega DreamCast Fishing"
+
+Modelos de Componentes Sega.:
+"Cabo Coaxial",
+"Cabo AV",
+"Cabo VGA",
+"Fonte"
+
+Nintendo
+
+Modelos de Consoles Nintendo.:
+"Game & Watch",
+"Nintendo Entertainment System",
+"Super Nintendo Entertainment System",
+"Nintendo 64",
+"Gameboy Advanced",
+" DS",
+"GameCube",
+"Nintendo Wii",
+"Nintendo 3DS",
+"Nintendo Switch"
+
+Modelos de Acessórios Nintendo.:
+"Amiibo",
+"JoyCon Grip",
+"Mario Kart Live Home Circuit",
+"Super NES Mouse"
+
+Modelos de Controles Nintendo.:
+"JoyCon",
+"Controller Pro",
+"Wii Remote",
+"Nunchuk",
+"NES Controller",
+"SNES Controller",
+"64 Controller"
+
+Modelos de Componentes Nintendo.:
+"Dock",
+"Cabo USB",
+"Baterias",
+"Cabo Coaxial",
+"Cabo AV",
+"Cabo VGA",
+"Cabo HDMI",
+"Fonte"
+
+Playstation
+
+Modelos de Consoles Playstation.:
+"Playstation",
+"Playstation 2",
+"Playstation 3",
+"Playstation 4",
+"Playstation 5",
+"PSP",
+"PSVita"
+
+Modelos de Acessórios Playstation.:
+"Hd Camera",
+"Pulse3d Wireless HeadSet",
+"DualSense Charging Station",
+"PSVR",
+"PSVR Aim Controller",
+"Memory Card"
+
+Modelos de Controles Playstation.:
+"Dualshock",
+"Dualshock 2",
+"Dualshock 3",
+"Dualshock 4",
+"Dualsense"
+
+Modelos de Componentes Playstation.:
+"Cabo USB",
+"Baterias",
+"Cabo AV",
+"Cabo VGA",
+"Cabo HDMI",
+"Fonte"
+
+Xbox
+
+Modelos de Consoles Xbox.:
+"Xbox",
+"Xbox 360",
+"Xbox One",
+"Xbox Series"
+
+Modelos de Acessórios Xbox.:
+"Kinect",
+"Xbox Wireless HeadSet",
+"Play & Charge",
+"Xbox Seagate",
+"Bluetooth Adapter"
+
+Modelos de Controles Xbox.:
+"Xbox Classic Controller",
+"Xbox 360 Controller",
+"Xbox One Controller",
+"Xbox One Elite Controller",
+"Xbox Series Controller",
+"Xbox Adaptive Controller"
+
+Modelos de Componentes Xbox.:
+"Cabo USB",
+"Baterias",
+"Cabo AV",
+"Cabo VGA",
+"Cabo HDMI",
+"Fonte"
