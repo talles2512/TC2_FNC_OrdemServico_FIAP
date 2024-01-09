@@ -12,13 +12,13 @@ O <b>[Tech Challenge - Fase 02]</b> do curso de Arquitetura de Sistemas .Net com
 Azure Function desenvolvida em .NET 6 Core utilizando a IDE Visual Studio 2022, utilizando EF Core para gestão de dados (SQL Server Local ou Nuvem-PaaS). A function simula a ordem de pedido de manutenção de produtos voltados para hardwares antigos e novos de video games. A function foi desenvolvida utilizando o template durable, contendo assim um orquestador e alguns functions que tem funcionalidade bem definidas como.:
 </br>
 </br>
-- 👾 <b>HttpTriigerFunction.:</b> Function responsável por receber o "acionamento" http e inicializar o orquestador.</br>
-- 👾 <b>OrdemOrcestrator.:</b> Orquestrador da function, responsável por chamar as functions especificas do projeto e retornar o valor da ordem de serviço e status da ordem.</br>
-- 👾 <b>OrdemBancoFunction.:</b> Função responsável por obter ordem de processamento ou inserir uma nova caso não exista no banco de dados.</br>
-- 👾 <b>ProcessamentoOrdemBancoFunction.:</b> Função responsável por definir qual tipo de ação irá ser realizada para cada entrada de ordem, seja de inserção ou alteração.</br>
-- 👾 <b>VerificaTipoProdutoFunction.:</b> Função responsável por verificar se a marca do produto, tipo e modelo são aceitos na ordem e calcular o tempo de garantia do mesmo.</br>
-- 👾 <b>GeraPrazoManutencaoFunction.:</b> Função responsável por verificar o tipo de defeito informado na ordem e devolver qual o prazo de manutenção/conclusão do serviço em dias uteis.</br>
-- 👾 <b>VerificaGarantiaProdutoFunction.:</b> Função responsável por verificar de acordo com a data de aquisição do produto informado se o serviço a ser realizado estara coberto pela garantia ou não.</br>
+- 👾 <b>HttpTriggerFunction.:</b> Function responsável por receber o "acionamento" http, validando o corpo da requisição e inicializando o Orquestrador caso a validação tenha sucesso.</br>
+- 👾 <b>OrdemOrchestrator.:</b> Orquestrador da function, responsável por chamar as functions especificas do projeto e retornar o valor da ordem de serviço e status da ordem.</br>
+- 👾 <b>OrdemBancoFunction.:</b> Serve como a camada de intermediação com o banco de dados para a Ordem, responsável por obter ou inserir uma nova ordem conforme a regra de negócio.</br>
+- 👾 <b>ProcessamentoOrdemBancoFunction.:</b> Serve como a camada de intermediação com o banco de dados para o Processamento da Ordem, inserindo e atualizando o andamento da Ordem de acordo com o processamento interno.</br>
+- 👾 <b>VerificaTipoProdutoFunction.:</b> Função responsável por verificar se a Marca do Produto, Tipo e Modelo são fazem parte da cobertura do serviço, calculando o tempo de garantia do mesmo.</br>
+- 👾 <b>GeraPrazoManutencaoFunction.:</b> Função responsável por verificar o tipo de defeito informado da Ordem, identificando se há cobertura e devolvendo o prazo de manutenção/conclusão do serviço em dias úteis.</br>
+- 👾 <b>VerificaGarantiaProdutoFunction.:</b> Função responsável por verificar, de acordo com a data de aquisição do produto informado e da cobertura de serviço processada, se o serviço a ser realizado estara coberto pela garantia ou não.</br>
 
 <h4 align="left">Instruções do projeto - Preparação</h4>
 A configuração para execução da Azure Function se trata apenas de qual local você pretende executa-la. Seja localmente ou subindo o serviço no Azure Function na Nuvem (vídeo demonstrativo CI/CD em andamento).:
