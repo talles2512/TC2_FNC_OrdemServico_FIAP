@@ -37,7 +37,7 @@ Ao executar a Azure Function seja local ou seja em nuvem, podemos utilizar como 
 <img src="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Prints%20Uteis/05%20-%20Verificando%20o%20Registro%20da%20Ordem%20enviada%20no%20Banco%20de%20Dados.png"></img>
 
 <h4 align="left">Dados necessários para teste</h4>
-Segue a lista de marcas do produto, tipos, modelos e tipos de defeitos aceitos na requisições de novas ordens.: <a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Dados%20Necessarios%20para%20Emissao%20de%20Ordem/DocDadosParaRequisicoes_FNC_OrdemServico.txt">Documentos de Dados para Requisições no FNC_OrdemServico</a>.
+Segue a lista de marcas do produto, tipos, modelos e tipos de defeitos aceitos na requisições de novas ordens.: <a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Dados%20Necessarios%20para%20Emissao%20de%20Ordem/readme.md">Documentos de Dados para Requisições no FNC_OrdemServico</a>.
 
 <h3 align="left">Criação de Pipeline CI/CD da Azure Fuction</h3>
 [Em Construção...]
