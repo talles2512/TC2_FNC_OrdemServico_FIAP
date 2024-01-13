@@ -83,7 +83,7 @@ namespace FNC_OrdemServico
             }
             else
             {
-                var resultadoOperacao = await context.CallActivityAsync<ResultadoOperacao<int>>("VerificaTipoProdutoFunction", ordem);
+                var resultadoOperacao = await context.CallActivityAsync<ResultadoOperacao<int>>("VerificaCoberturaServicoFunction", ordem);
 
                 if (resultadoOperacao.Sucesso)
                 {

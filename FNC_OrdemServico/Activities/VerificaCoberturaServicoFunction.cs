@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace FNC_OrdemServico.Activities
 {
-    public static class VerificaTipoProdutoFunction
+    public static class VerificaCoberturaServicoFunction
     {
-        [FunctionName("VerificaTipoProdutoFunction")]
+        [FunctionName("VerificaCoberturaServicoFunction")]
         public static async Task<ResultadoOperacao<int>> Run(
             [ActivityTrigger] Ordem ordem,
             ILogger log)

@@ -18,29 +18,38 @@ namespace FNC_OrdemServico
     {
         [FunctionName("HttpTriggerFunction")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", "get", Route = null)] HttpRequest req,
             [DurableClient] IDurableOrchestrationClient starter, 
             ILogger log)
         {
-            log.LogInformation("Nova requisição recebida!");
-
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-
-            log.LogInformation($"Body: {requestBody}");
-
-            var ordem = JsonConvert.DeserializeObject<Ordem>(requestBody);
-
-            var (ordemValida, mensagensErros) = ValidarOrdem(ordem);
-
-            if (ordemValida)
+            if(req.Method == "POST")
             {
-                ordem.Id = Guid.NewGuid();
-                string instanceId = await starter.StartNewAsync("OrdemOrquestrator", ordem);
-                return starter.CreateCheckStatusResponse(req, instanceId);
+                log.LogInformation("Nova requisição recebida!");
+
+                string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+
+                log.LogInformation($"Body: {requestBody}");
+
+                var ordem = JsonConvert.DeserializeObject<Ordem>(requestBody);
+
+                var (ordemValida, mensagensErros) = ValidarOrdem(ordem);
+
+                if (ordemValida)
+                {
+                    ordem.Id = Guid.NewGuid();
+                    string instanceId = await starter.StartNewAsync("OrdemOrquestrator", ordem);
+                    return starter.CreateCheckStatusResponse(req, instanceId);
+                }
+                else
+                {
+                    return new BadRequestObjectResult(new { Erros = mensagensErros });
+                }
             }
             else
             {
-                return new BadRequestObjectResult(new { Erros = mensagensErros });
+                log.LogInformation("C# HTTP trigger function processed a request.");
+
+                return new OkObjectResult("Esta função acionada por HTTP foi executada com sucesso. Passe um nome na string de consulta ou no corpo da solicitação para obter uma resposta personalizada.");
             }
         }
 
@@ -77,7 +86,10 @@ namespace FNC_OrdemServico
 
             if (string.IsNullOrEmpty(ordem.DescricaoProblema) || ordem.DescricaoProblema.Length < 5)
                 mensagensErros.Add("Por favor preencha a descrição do problema corretamente.");
-            
+
+            if(ordem.DataAquisicao > DateTime.Now)
+                mensagensErros.Add("Por favor preencha a data da aquisição corretamente.");
+
             return Tuple.Create(mensagensErros.Count() == 0, mensagensErros);
         }
     }
