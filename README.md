@@ -41,3 +41,20 @@ Segue a lista de marcas do produto, tipos, modelos e tipos de defeitos aceitos n
 
 <h3 align="left">Criação de Pipeline CI/CD da Azure Fuction</h3>
 [Em Construção...]
+
+<h3 align="left">Comandos utilizados na construção do Pipeline</h3>
+
+- Criar a Storage Account:</br>
+    - az storage account create --name [nome-do-storage-account] --resource-group [nome-do-grupo-de-recursos] --location brazilsouth --sku Standard_LRS</br>
+- Criar a Function App:</br>
+    - az functionapp create --resource-group [nome-do-grupo-de-recursos] --name [nome-da-function] --consumption-plan-location brazilsouth --os-type Linux --runtime dotnet --functions-version 4 --storage-account [nome-do-storage-account]</br>
+- Habilitar o Identity na Function App:</br>
+    - az functionapp identity assign --n [nome-da-function] --resource-group [nome-do-grupo-de-recursos]</br>
+- Obter PrincipalId da Function App e atribuir a uma variável:</br>
+    - $functionPrincipalId = (az functionapp show -n [nome-da-function] -g [nome-do-grupo-de-recursos] --query identity.principalId --out tsv)</br>
+- Dar permissão para a Function App ler secrets no Key Vault:</br>
+    - az keyvault set-policy --name [nome-do-key-vault] --object-id $functionPrincipalId --secret-permissions get</br>
+- Obter Id do Secret (Url) no Key Vault e atribuir a uma variável:</br>
+    - $secretId = (az keyvault secret show -n [nome-do-secret] --vault-name [nome-do-key-vault] --query id --out tsv)</br>
+- Adicionar Parâmetro de referência ao Secret no AppSettings da Function App:</br>
+    - az functionapp config appsettings set --name [nome-da-function] --resource-group [nome-do-grupo-de-recursos] --settings OrdemServicoDbSecret=\`""@Microsoft.KeyVault(SecretUri=$secretId)"`"</br>
