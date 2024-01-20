@@ -40,7 +40,7 @@ Ao executar a Azure Function seja local ou seja em nuvem, podemos utilizar como 
 Segue a lista de marcas do produto, tipos, modelos e tipos de defeitos aceitos na requisições de novas ordens.: <a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Dados%20Necessarios%20para%20Emissao%20de%20Ordem/readme.md">Documentos de Dados para Requisições no FNC_OrdemServico</a>.
 
 <h3 align="left">Criação de Pipeline CI/CD da Azure Fuction</h3>
-[Em Construção...]
+<a href="https://youtu.be/UF5xlfjW_Fk">Montando a Pipeline no Azure DevOps e executando o Deploy em uma Function App</a></br>
 
 <h3 align="left">Comandos utilizados na construção do Pipeline</h3>
 
