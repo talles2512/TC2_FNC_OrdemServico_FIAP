@@ -28,7 +28,7 @@ A configuração para execução da Azure Function se trata apenas de qual local
     - 👾 <b>Diagrama da Tabelas.:</b> <a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Scripts%20FNC_OrdemServico/Diagrama_FNC_OrdemServico_Tabelas.png">Diagramas SQL</a>.
 
 <h4 align="left">Iniciando o projeto</h4>
-Ao executar a Azure Function seja local ou seja em nuvem, podemos utilizar como aplicação cliente o Postman para realizar alguns requisições HTTP para function. Segue alguns prints de exemplo (<a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Json%20Exemplo/OrdemServicoJson.json">json utilizado</a>).:
+Ao executar a Azure Function seja local ou seja em nuvem, podemos utilizar como aplicação cliente o Postman para realizar alguns requisições HTTP para function. Segue alguns prints de exemplo (<a href="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/tree/develop/Documentos%20Uteis/Json%20Exemplo">requisições .jsons</a>).:
 
 <img src="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Prints%20Uteis/01%20-%20Function%20Rodando%20no%20Console%20Windows.png"></img>
 <img src="https://github.com/talles2512/TC2_FNC_OrdemServico_FIAP/blob/develop/Documentos%20Uteis/Prints%20Uteis/02%20-%20Prepara%C3%A7%C3%A3o%20da%20Requisi%C3%A7%C3%A3o%20para%20o%20HttpTriggerFunction%20no%20Postman.png"></img>
