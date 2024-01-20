@@ -1,0 +1,13 @@
+{
+    "NomeCliente": "Leonardo Oliveira",
+    "Endereco": "Av Lopes",
+    "NumeroTelefone": "11900001234",
+    "Email": "leonardo@emai.com",
+    "TipoProduto": "Acessorio",
+    "MarcaProduto": "Soni",
+    "ModeloEquipamento": "PSVR",
+    "NumeroSerie": "2001241212",
+    "TipoDefeito": "Falhas de Hardware Gerais",
+    "DescricaoProblema": "Produto com problema de conexão no console",
+    "DataAquisicao": "2024-01-13"
+}

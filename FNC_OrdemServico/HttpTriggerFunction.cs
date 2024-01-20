@@ -69,13 +69,13 @@ namespace FNC_OrdemServico
             if (string.IsNullOrEmpty(ordem.Email) || ordem.Email.Length < 10)
                 mensagensErros.Add("Por favor preencha o e-mail corretamente.");
 
-            if (string.IsNullOrEmpty(ordem.TipoProduto) || ordem.TipoProduto.Length < 5)
+            if (string.IsNullOrEmpty(ordem.TipoProduto) || ordem.TipoProduto.Length < 4)
                 mensagensErros.Add("Por favor preencha o tipo do produto corretamente.");
 
-            if (string.IsNullOrEmpty(ordem.MarcaProduto) || ordem.MarcaProduto.Length < 5)
+            if (string.IsNullOrEmpty(ordem.MarcaProduto) || ordem.MarcaProduto.Length < 4)
                 mensagensErros.Add("Por favor preencha a marca do produto corretamente.");
 
-            if (string.IsNullOrEmpty(ordem.ModeloEquipamento) || ordem.ModeloEquipamento.Length < 5)
+            if (string.IsNullOrEmpty(ordem.ModeloEquipamento) || ordem.ModeloEquipamento.Length < 4)
                 mensagensErros.Add("Por favor preencha o modelo do equipamento corretamente.");
 
             if (string.IsNullOrEmpty(ordem.NumeroSerie) || ordem.NumeroSerie.Length < 5)

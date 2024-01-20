@@ -1,0 +1,13 @@
+{
+    "NomeCliente": "Leonardo Oliveira",
+    "Endereco": "Av Lopes",
+    "NumeroTelefone": "11900001234",
+    "Email": "leonardo@emai.com",
+    "TipoProduto": "Joystick",
+    "MarcaProduto": "Nintendo",
+    "ModeloEquipamento": "Controller Pro",
+    "NumeroSerie": "2001241154",
+    "TipoDefeito": "Desgaste",
+    "DescricaoProblema": "Controle apresenta movimentação do analógico mesmo quando está em repouso",
+    "DataAquisicao": "2024-01-13"
+}

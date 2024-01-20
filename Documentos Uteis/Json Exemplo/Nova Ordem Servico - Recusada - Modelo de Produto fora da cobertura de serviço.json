@@ -1,0 +1,13 @@
+{
+    "NomeCliente": "Leonardo Oliveira",
+    "Endereco": "Av Lopes",
+    "NumeroTelefone": "11900001234",
+    "Email": "leonardo@emai.com",
+    "TipoProduto": "Componente",
+    "MarcaProduto": "Sega",
+    "ModeloEquipamento": "Cabo HDMi",
+    "NumeroSerie": "2001241215",
+    "TipoDefeito": "Problemas de Áudio e Vídeo",
+    "DescricaoProblema": "Cabo não encaixa no DreamCast",
+    "DataAquisicao": "2024-01-13"
+}

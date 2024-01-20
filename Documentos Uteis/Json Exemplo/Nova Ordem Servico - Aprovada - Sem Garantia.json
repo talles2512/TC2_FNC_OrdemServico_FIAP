@@ -1,0 +1,13 @@
+{
+    "NomeCliente": "Hebert",
+    "Endereco": "Av 1234",
+    "NumeroTelefone": "11900000000",
+    "Email": "email@emai.com",
+    "TipoProduto": "Console",
+    "MarcaProduto": "Xbox",
+    "ModeloEquipamento": "Xbox 360",
+    "NumeroSerie": "2001241205",
+    "TipoDefeito": "Superaquecimento",
+    "DescricaoProblema": "Video game desligando sozinho por Superaquecimento",
+    "DataAquisicao": "2021-01-13"
+}
